@@ -1,9 +1,9 @@
 const autoBind = require("auto-bind");
 
 const { Controller } = require("../../system/controllers")
-const { HttpError } = require("../../system/helpers/HttpError");
 const { Stream } = require("../models/Stream");
 const { StreamService } = require("../services/StreamService");
+const AuthController = require("./AuthController");
 
 const streamService = new StreamService(
   new Stream().getInstance()
@@ -37,6 +37,20 @@ class StreamController extends Controller{
 
   async startStream(req, res){
     
+  }
+
+  async checkStreamToken(req, res, next){
+    try{
+      const token = AuthController.extractToken(req);
+      const data = await this.service.decodeStreamToken(token);
+      if(data){
+        req.user = data.user;
+        req.body.stream = data.stream;
+        next();
+      }
+    }catch(e){
+      next(e);
+    }    
   }
 
   checkUserRole(req, res, next){

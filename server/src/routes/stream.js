@@ -10,6 +10,6 @@ router.get("/user", AuthController.checkLogin, StreamController.checkUserRole, S
 router.put("/:id", AuthController.checkLogin, StreamController.checkUserRole, StreamController.update);
 router.delete("/:id", AuthController.checkLogin, StreamController.checkUserRole, StreamController.delete);
 router.get("/create-token/:streamId", AuthController.checkLogin, StreamController.checkUserRole, StreamController.verifyUser, StreamController.createStreamToken);
-router.post("/start", AuthController.checkLogin, StreamController.checkUserRole, StreamController.startStream);
+router.get("/start", StreamController.checkStreamToken,StreamController.startStream);
 
 module.exports = router;

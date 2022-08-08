@@ -72,6 +72,14 @@ class Stream{
       }
     }
 
+    schema.statics.decodeStreamToken = async function(token){
+      try{
+        return await jwt.verify(token, jwtKey);
+      }catch(e){
+        throw e;
+      }
+    };
+
     try{
       mongoose.model("stream", schema);
     }catch(e){

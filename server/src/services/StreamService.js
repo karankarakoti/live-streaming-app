@@ -31,6 +31,11 @@ class StreamService extends Service{
     return token;
   }
 
+  async decodeStreamToken(token){
+    const data = await this.model.decodeStreamToken(token);
+    return data;
+  }
+
 }
 
 module.exports = { StreamService };
