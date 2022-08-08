@@ -1,0 +1,30 @@
+{
+  "short_name": "<WebName>",
+  "name": "<Web Description>",
+  "icons": [    
+    {
+      "src": "favicon16x16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "favicon32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "favicon256x256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "favicon-lg.png",
+      "type": "image/png",
+      "sizes": "1100x1100"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#fd7e14",
+  "background_color": "#002147"
+}

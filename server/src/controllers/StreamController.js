@@ -1,0 +1,81 @@
+const autoBind = require("auto-bind");
+
+const { Controller } = require("../../system/controllers")
+const { HttpError } = require("../../system/helpers/HttpError");
+const { Stream } = require("../models/Stream");
+const { StreamService } = require("../services/StreamService");
+
+const streamService = new StreamService(
+  new Stream().getInstance()
+);
+
+class StreamController extends Controller{
+  constructor(service){
+    super(service);
+    this.service = service;
+    autoBind(this);
+  }
+
+  async getLiveStreams(req, res){
+    const streams = await this.service.getLiveStreams()
+    await res.status(200).json(streams);      
+  }
+
+  async getUserStreams(req, res){
+    const streams = await this.service.getUserStreams(req.user._id)
+    await res.status(200).json(streams);      
+  }
+
+  async createStreamToken(req, res){
+    const data = {
+      user: req.user,
+      stream: req.body.stream
+    }
+    const token = await this.service.createStreamToken(data);
+    res.status(200).json({token: token});
+  }
+
+  async startStream(req, res){
+    
+  }
+
+  checkUserRole(req, res, next){
+    if(req.user.role === "streamer"){
+      req.authorized = true;      
+      req.body.streamKey = req.user.streamKey;
+      req.body.createdBy = req.user._id;
+      next();
+    }else{
+      const error = new Error("Authorization Required");
+      error.statusCode = 401;
+      throw error;
+    }
+  }
+
+  async verifyUser(req, res, next){
+    try{
+      const { streamId } = req.params      
+      const stream = await this.service.find(streamId);          
+      if(typeof(stream) === "object"){
+        if(req.user._id === String(stream.createdBy)){
+          req.body.stream = stream;        
+          next()
+        }else{
+          const error = new Error("Authorization Required");
+          error.statusCode = 401;
+          next(error)
+        }        
+      }else{        
+        const error = new Error("Stream not found");
+        error.statusCode = 401;
+        next(error)
+      }
+    }catch(e){      
+      const error = new Error("Stream not found");
+      error.statusCode = 401;
+      next(error)
+    }
+  }
+}
+
+module.exports = new StreamController(streamService);
