@@ -1,7 +1,6 @@
 "use strict";
 
 const autoBind = require("auto-bind");
-const { HttpResponse } = require("../../system/helpers/HttpResponse");
 const { Service } = require("../../system/services");
 
 class StreamService extends Service{

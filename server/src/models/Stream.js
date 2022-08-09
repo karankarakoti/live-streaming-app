@@ -35,6 +35,10 @@ class Stream{
         "required": true,
         "default": false
       },
+      "streamPrice": {
+        "type": Number,
+        "required": false        
+      },
       "accessibleTo": {
         "type": [
           {

@@ -36,18 +36,44 @@ class StreamController extends Controller{
   }
 
   async startStream(req, res){
-    
+    const data = {
+      user: req.user,
+      stream: req.body.stream
+    }
+    const updateData = {
+      "isStreamingNow": true
+    }
+    const isUpdated = await this.service.update(data.stream._id, updateData);    
+    res.status(200).json(isUpdated);
+  }
+
+  async stopStream(req, res){
+    const data = {
+      user: req.user,
+      stream: req.body.stream
+    }
+    const updateData = {
+      "isStreamingNow": false
+    }
+    const isUpdated = await this.service.update(data.stream._id, updateData);    
+    res.status(200).json(isUpdated);
   }
 
   async checkStreamToken(req, res, next){
     try{
-      const token = AuthController.extractToken(req);
-      const data = await this.service.decodeStreamToken(token);
-      if(data){
-        req.user = data.user;
-        req.body.stream = data.stream;
-        next();
-      }
+      const token = AuthController.extractToken(req);      
+      if(token){
+        const data = await this.service.decodeStreamToken(token);
+        if(data){
+          req.user = data.user;
+          req.body.stream = data.stream;
+          next();
+        }
+      }else{
+        const error = new Error("Invalid Token");
+        error.statusCode = 401;
+        next(error);
+      }     
     }catch(e){
       next(e);
     }    

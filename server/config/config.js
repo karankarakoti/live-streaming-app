@@ -15,7 +15,38 @@ module.exports.getConfig = () => {
     "MAIL_PORT": process.env.MAIL_PORT,
     "MAIL_USER": process.env.MAIL_USER,
     "MAIL_PASS": process.env.MAIL_PASS,
-    "UPLOAD_PATH": path.resolve( `${__dirname }/../../uploads` ),
+    "UPLOAD_PATH": path.resolve( `${__dirname }/../../uploads`),
+    "RTMP_SERVER": {
+      rtmp: {
+        port: process.env.RTMP_MS_PORT,
+        chunk_size: 60000,
+        gop_cache: true,
+        ping: 60,
+        ping_timeout: 30
+      },
+      http: {
+        port: process.env.RTMP_HTTP_PORT,
+        mediaroot: process.env.RTMP_HTTP_MEDIA_ROOT,
+        allow_origin: "*"
+      },
+      trans: {
+        ffmpeg: process.env.RTMP_FFMPEG_LOCATION,
+        tasks: [
+          {
+            app: "live",
+            hls: true,
+            hlsFlags: "[hls_time=2:hls_list_size=3:hls_flags=delete_segments]",
+            dash: true,
+            dashFlags: "[f=dash:window_size=3:extra_window_size=5]"
+          }
+        ]
+      },
+      auth: {
+        api: false,
+        api_user: process.env.RTMP_HTTP_USER,
+        api_pass: process.env.RTMP_HTTP_PASSWORD,
+      }
+    },    
   }
 
   return config

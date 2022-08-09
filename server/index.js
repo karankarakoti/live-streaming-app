@@ -2,6 +2,8 @@ require("dotenv").config();
 require("./config/database");
 
 const config = require("./config/config").getConfig();
+const NodeMediaServer = require("./mediaServer");
+const thumbnail_generator = require("./cron/thumbnails");
 const PORT = config.PORT;
 
 console.log("✔ Bootstrapping Application");
@@ -17,5 +19,8 @@ server.listen(PORT).on("error", (err) => {
 }).on("listening", () => {
   console.log("✔ Application Started");
 });
+
+NodeMediaServer.run();
+thumbnail_generator.start();
 
 module.exports = { server }
