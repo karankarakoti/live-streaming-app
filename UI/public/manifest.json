@@ -1,6 +1,6 @@
 {
-  "short_name": "<WebName>",
-  "name": "<Web Description>",
+  "short_name": "Live Streaming App",
+  "name": "Live Video Streaming Application",
   "icons": [    
     {
       "src": "favicon16x16.png",

@@ -4,7 +4,7 @@ const StreamController = require("../controllers/StreamController");
 
 const router = express.Router();
 
-router.post("/", AuthController.checkLogin, StreamController.checkUserRole, StreamController.insert);
+router.post("/", AuthController.checkLogin, StreamController.checkUserRole, StreamController.createStream);
 router.get("/live", StreamController.getLiveStreams);
 router.get("/user", AuthController.checkLogin, StreamController.checkUserRole, StreamController.getUserStreams);
 router.put("/:id", AuthController.checkLogin, StreamController.checkUserRole, StreamController.update);

@@ -1,6 +1,5 @@
 const autoBind = require("auto-bind");
 const bcrypt = require("bcrypt");
-const shortId = require("shortid");
 
 const { AuthService } = require("../services/AuthService");
 const { Auth } = require("../models/Auth");
@@ -88,11 +87,7 @@ class AuthController{
         req.user = await this.service.checkLogin(token);
         if(req.user.role === "admin"){
           req.authorized = true;
-          req.token = token;
-          if(req.body.role === "streamer"){
-            const streamKey = shortId();
-            req.body.streamKey = streamKey;
-          }
+          req.token = token;          
           next();
         }else{
           const error = new Error("Authorization Required");

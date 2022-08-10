@@ -36,11 +36,7 @@ class User{
       "status": {
         "type": Boolean,
         "default": true
-      },
-      "streamKey": {
-        "type": String,
-        "required": false
-      }
+      }     
     }, { "timestamps": true });
 
     schema.pre("save", function(next){

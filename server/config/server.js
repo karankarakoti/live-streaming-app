@@ -7,7 +7,7 @@ const { setRoutes } = require("./routes");
 
 const server = express();
 
-server.use(helmet());
+server.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 const corsOptions = { "origin": "*" };
 server.use(cors(corsOptions));
 server.use(express.json());

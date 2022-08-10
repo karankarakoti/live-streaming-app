@@ -15,18 +15,20 @@ nms.on("prePublish", async(id, streamPath, args) => {
         Authorization: "Bearer " + args.token
       }
     }).then(async resp => {
-      response = await resp.data;
-      if(response?.statusCode === 200){
+      response = await resp?.data ? resp.data : null;
+      if(response?.statusCode && response.statusCode === 200){
         helpers.generateStreamThumbnail(streamKey);
       }else{
         session.reject()
       }
-    }).catch(error => {
-      session.reject()
-      console.log(error)
+    }).catch(err => {
+      session.reject()            
+      console.log("Authorization Required");
+      // console.log(error)
     });    
   }else{
     session.reject();
+    console.log("Authorization Required");      
   }  
 });
 
@@ -38,18 +40,21 @@ nms.on('donePublish', async(id, StreamPath, args) => {
         Authorization: "Bearer " + args.token
       }
     }).then(async resp => {
-      response = await resp.data;
-    }).catch(error => {
-      console.log(error)
-    });
-    if(response.statusCode === 200){
-      //helpers.generateStreamThumbnail(streamKey);
-    }
+      response = await resp?.data ? resp.data : null;
+      if(response?.statusCode && response.statusCode === 200){
+        // helpers.generateStreamThumbnail(streamKey);
+      }
+    }).catch(err => {      
+      console.log("Authorization Required");      
+    });    
   }else{
-    const error = "Invalid Token";
-    error.statusCode = 401;
-    throw error;
+    console.log("Authorization Required");      
   }  
+});
+
+nms.on('preConnect', (id, args) => {
+  // User Access Request Check Here for Secure Streams
+  // console.log("New User Connected")  
 });
 
 

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
-import { HomePage } from "templates";
+import { StreamPage } from "templates";
 import { scrollToTop } from "utils/utilities";
 
-export const Home = () => {
+export const Stream = () => {
 
   useEffect(() => {
     scrollToTop(window)
@@ -11,9 +11,9 @@ export const Home = () => {
 
   return (
     <>
-      <HomePage/>
+      <StreamPage/>
     </>
   );
 };
 
-export default Home;
+export default Stream;

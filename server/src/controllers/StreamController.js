@@ -1,4 +1,5 @@
 const autoBind = require("auto-bind");
+const shortid = require("shortid");
 
 const { Controller } = require("../../system/controllers")
 const { Stream } = require("../models/Stream");
@@ -16,8 +17,17 @@ class StreamController extends Controller{
     autoBind(this);
   }
 
+  async createStream(req, res){
+    req.body.createdBy = req.user._id;
+    req.body.streamKey = shortid();
+    const stream = await this.service.insert(req.body);
+    res.status(201).json(stream);
+  }
+
   async getLiveStreams(req, res){
-    const streams = await this.service.getLiveStreams()
+    const liveStreams = await this.service.getLiveStreams();
+    const securedStreams = await this.service.getSecuredStreams();
+    const streams = [...liveStreams, ...securedStreams];
     await res.status(200).json(streams);      
   }
 
@@ -53,7 +63,8 @@ class StreamController extends Controller{
       stream: req.body.stream
     }
     const updateData = {
-      "isStreamingNow": false
+      "isStreamingNow": false,
+      "isStreamFinish": true
     }
     const isUpdated = await this.service.update(data.stream._id, updateData);    
     res.status(200).json(isUpdated);
@@ -68,6 +79,10 @@ class StreamController extends Controller{
           req.user = data.user;
           req.body.stream = data.stream;
           next();
+        }else{
+          const error = new Error("Invalid Token");
+          error.statusCode = 401;
+          next(error);
         }
       }else{
         const error = new Error("Invalid Token");
@@ -81,9 +96,7 @@ class StreamController extends Controller{
 
   checkUserRole(req, res, next){
     if(req.user.role === "streamer"){
-      req.authorized = true;      
-      req.body.streamKey = req.user.streamKey;
-      req.body.createdBy = req.user._id;
+      req.authorized = true;                  
       next();
     }else{
       const error = new Error("Authorization Required");

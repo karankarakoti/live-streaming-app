@@ -20,6 +20,11 @@ class StreamService extends Service{
     return streams
   }
 
+  async getSecuredStreams(){
+    const streams = await this.model.find({$and: [{isStreamingNow: false }, { isSecuredStream: true}, { isStreamFinish: false}]});
+    return streams
+  }
+
   async getUserStreams(userId){
     const streams = await this.model.find({createdBy: userId}).select("+accessibleTo")
     return streams

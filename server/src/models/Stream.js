@@ -49,7 +49,12 @@ class Stream{
         ],
         "required": false,
         "select": false
-      }
+      },
+      "isStreamFinish": {
+        "type": Boolean,
+        "required": true,
+        "default": false
+      },
     }, {"timestamps": true});
 
     schema.pre("save", function(next){
@@ -80,7 +85,7 @@ class Stream{
       try{
         return await jwt.verify(token, jwtKey);
       }catch(e){
-        throw e;
+        console.log("Invalid Token");
       }
     };
 
