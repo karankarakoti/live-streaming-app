@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { StreamCard } from "molecules";
-import { Layout } from "templates";
-import axiosInstance from "utils/axios";
 import { Grid } from "atoms";
+import { StreamCard } from "molecules";
+import { getStreams } from "redux/actions";
+import { Layout } from "templates";
 
 export const HomePage = () => {
+  
+  const dispatch = useDispatch();
+  const app = useSelector(state => state.app);
 
-  const [ liveStreams, setLiveStreams ] = useState([]);
-
-  useEffect(() => {
-    getLiveStreams()
-  }, [])
-
-  const getLiveStreams = async() => {
-    const response = await axiosInstance.get("/streams/live");
-    setLiveStreams(response.data)
-  }
+  useEffect(() => {    
+    dispatch(getStreams());        
+  }, [])  
 
   return(
     <Layout>  
@@ -26,9 +23,10 @@ export const HomePage = () => {
         gridRowGap="3rem"
         placeItems="center"
         my="4rem"
+        px="2rem"
       >
         {
-          liveStreams.map((item)=>(
+          app.streams?.map((item)=>(
             <StreamCard 
               key={item._id}
               streamTitle={item.streamTitle}
@@ -37,9 +35,10 @@ export const HomePage = () => {
               isStreamingNow={item.isStreamingNow}
               isSecuredStream={item.isSecuredStream}
               streamPrice={item.streamPrice ? item.streamPrice : null}
+              createdBy={item.createdBy}
             />
           ))
-        }
+        }      
       </Grid>          
     </Layout>
   )

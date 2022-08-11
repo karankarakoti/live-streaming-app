@@ -33,15 +33,16 @@ a {
 
 input[type="text"],
 input[type="email"],
+input[type="password"],
 textarea {
   display: block;
   width: 100%;
   padding: 3px 10px;
-  font-size: 2rem;
-  line-height: 3rem;  
+  font-size: 1.8rem;
+  line-height: 2.4rem;  
   font-weight: 400;
   border-radius: 4px;
-  border: 1px solid #454545;
+  border: 1px solid #CCC;
   margin-top: 0.5rem;
   font-family: "Lato";
   resize: vertical;
@@ -49,15 +50,16 @@ textarea {
 }
 
 input[type="text"],
-input[type="email"] {
-  height: 5.4rem;
+input[type="email"],
+input[type="password"] {
+  height: 5rem;
 }
 
 ::-webkit-input-placeholder {
-  color: #6c757d;
+  color: #888;
   font-weight: 400;
-  font-size: 2rem;
-  line-height: 3rem;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
   font-family: "Lato";
 }
 

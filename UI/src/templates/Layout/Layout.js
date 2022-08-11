@@ -1,22 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import { Box } from "atoms";
 import { Navbar } from "organisms";
 
 export const Layout = ({children}) => {
 
-  const user = null
-  const user1= {
-    "firstName": "Karan",
-    "lastName": "Karakoti",
-    "role": "user",
-    "email": "karankarakoti@gmail.com",
-    "password": "12345678"
-  }
+  const auth = useSelector(state => state.auth);  
 
   return(
     <Box height="100vh" width="100vw">
-      <Navbar user={user} />
+      <Navbar user={auth.user} />
       <Box overflowY="auto">
         {children}
       </Box>

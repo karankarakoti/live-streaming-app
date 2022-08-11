@@ -3,13 +3,14 @@ import { useParams } from "react-router-dom";
 import videojs from "video.js";
 
 import { Box } from "atoms";
-import { Layout } from "templates";
 import { VideoJS } from "molecules";
+import { Layout } from "templates";
+import { config } from "../../utils/config";
 
 export const StreamPage = () => {
 
   const { id } = useParams();
-  const playerRef = useRef(null);
+  const playerRef = useRef(null);   
   
   const videoJsOptions = {
     autoplay: true,
@@ -17,7 +18,7 @@ export const StreamPage = () => {
     responsive: true,
     fluid: true,
     sources: [{
-      src: "http://192.168.1.10:8000/live/" + id + "/index.m3u8",
+      src: `${config.RTMP_URL}:${config.RTMP_HTTP_PORT}/live/${id}/index.m3u8`,
       type: "application/x-mpegURL"
     }]
   };

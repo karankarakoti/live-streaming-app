@@ -29,6 +29,10 @@ class User{
         "type": String,
         "required": false
       },
+      "imageUrl": {
+        "type": String,
+        "required": false
+      },
       "role": {
         "type": String,
         "default": "user"

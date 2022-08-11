@@ -11,22 +11,22 @@ class StreamService extends Service{
   }
   
   async find(streamId){
-    const stream = await this.model.findById(streamId);
+    const stream = await this.model.findById(streamId).populate("createdBy", "firstName lastName imageUrl");
     return stream
   }
 
   async getLiveStreams(){
-    const streams = await this.model.find({isStreamingNow: true})
+    const streams = await this.model.find({isStreamingNow: true}).populate("createdBy", "firstName lastName imageUrl");
     return streams
   }
 
   async getSecuredStreams(){
-    const streams = await this.model.find({$and: [{isStreamingNow: false }, { isSecuredStream: true}, { isStreamFinish: false}]});
+    const streams = await this.model.find({$and: [{isStreamingNow: false }, { isSecuredStream: true}, { isStreamFinish: false}]}).populate("createdBy", "firstName lastName imageUrl");
     return streams
   }
 
   async getUserStreams(userId){
-    const streams = await this.model.find({createdBy: userId}).select("+accessibleTo")
+    const streams = await this.model.find({createdBy: userId}).select("+accessibleTo").populate("createdBy", "firstName lastName imageUrl");
     return streams
   }
 

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Player, Controls } from "@lottiefiles/react-lottie-player";
 
 import { Box } from "atoms";
+import { Layout } from "templates";
 import { scrollToTop } from "utils/utilities";
 
 export default function ErrorPage() {
@@ -13,13 +14,13 @@ export default function ErrorPage() {
   }, [])
 
   return (
-    <>
+    <Layout>
       <Box p="2rem">
         <Box          
           borderRadius=".6rem"
           height="auto"
           bg="white"
-          boxShadow="0 10px 30px rgba(16,30,54,.25)"
+          // boxShadow="0 10px 30px rgba(16,30,54,.25)"
         >
           <Box
             textAlign="center"
@@ -33,6 +34,6 @@ export default function ErrorPage() {
           </Box>
         </Box>
       </Box>
-    </>
+    </Layout>
   );
 }
