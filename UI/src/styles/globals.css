@@ -34,6 +34,7 @@ a {
 input[type="text"],
 input[type="email"],
 input[type="password"],
+input[type="number"],
 textarea {
   display: block;
   width: 100%;
@@ -51,6 +52,7 @@ textarea {
 
 input[type="text"],
 input[type="email"],
+input[type="number"],
 input[type="password"] {
   height: 5rem;
 }
@@ -79,4 +81,44 @@ input[type="password"] {
 .active{
   color: #fd7e14 !important;
   font-weight: 600 !important;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 50px;
+}
+.toggle-switch input[type="checkbox"] {
+  display: none;
+}
+.toggle-switch .switch {
+  position: absolute;
+  cursor: pointer;
+  background-color: #f49696;
+  border-radius: 50px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: background-color 0.2s ease;
+}
+.toggle-switch .switch::before {
+  position: absolute;
+  content: "";
+  left: 2px;
+  bottom: 2px;
+  top: 2px;
+  width: 46px;
+  height: 46px;
+  background-color: #ffc0c0;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+.toggle-switch input[type="checkbox"]:checked + .switch::before {
+  transform: translateX(50px);
+  background-color: #E5F9F6;
+}
+.toggle-switch input[type="checkbox"]:checked + .switch {
+  background-color: #007E33;
 }

@@ -29,6 +29,7 @@ export const HomePage = () => {
           app.streams?.map((item)=>(
             <StreamCard 
               key={item._id}
+              id={item._id}
               streamTitle={item.streamTitle}
               streamKey={item.streamKey}
               streamThumbnail={item.streamThumbnail}

@@ -24,9 +24,10 @@ axiosInstance.interceptors.response.use(
     (res) => {
         return res
     },
-    (error) => {
+    (error) => {        
         const status = error.response ? error.response.status : 500
-        if(status && status === 500){
+        const name = error.response ? error.response.data.name : ""
+        if(status && status === 500 && name === "UnauthorizedError"){
             localStorage.clear()
             store.dispatch({ type: authConstants.LOGOUT_SUCCESS })
         }

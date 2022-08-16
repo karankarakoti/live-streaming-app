@@ -1,27 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import { Box, Flex, Image, Text } from "atoms";
-import { Button } from "atoms";
+import { Box, Button, Flex, Image, Text } from "atoms";
+import { createStreamToken, deleteStream } from "redux/actions";
 import { generatePublicUrl } from "utils/utilities";
 
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { HiOutlineClipboardCopy } from "react-icons/hi";
 import { TbCurrencyRupee } from "react-icons/tb";
 
-export const StreamCard = ({streamTitle, streamKey, streamThumbnail, isStreamingNow, isSecuredStream, streamPrice, createdBy, editMode}) => {
+export const StreamCard = ({id, streamTitle, streamKey, streamThumbnail, isStreamingNow, isSecuredStream, streamPrice, createdBy, editMode, onEdit}) => {
+
+  const dispatch = useDispatch()
+
+  const onCreateStreamToken = () => {
+    dispatch(createStreamToken(id, streamKey))
+  }
+
+  const onDelete = () => {
+    dispatch(deleteStream(id))
+  }
+
   return(
     <Box
       width={{ xs: "90vw", md: "90%", xm: "95%" }}
       borderRadius="0.4rem"
       boxShadow= "rgba(0, 0, 0, 0.24) 0px 3px 8px"
-      height="auto"
-      // border="1px solid"
-      // borderColor="whitesmoke"
+      height="auto"      
     >
       <Box
-        width="100%"
-        //height={{ xs: "18rem", md: "24rem"}}           
+        width="100%"        
       >
         <Image
           src={streamThumbnail ? streamThumbnail : generatePublicUrl(streamKey+".png")}
@@ -73,7 +82,8 @@ export const StreamCard = ({streamTitle, streamKey, streamThumbnail, isStreaming
               width="100%"
               variant="success"
               py="0.6rem"
-              color="white"              
+              color="white"    
+              onClick={() => onCreateStreamToken()}          
             >
               <HiOutlineClipboardCopy fontSize="2rem"/>
             </Button>
@@ -81,7 +91,8 @@ export const StreamCard = ({streamTitle, streamKey, streamThumbnail, isStreaming
               width="100%"
               variant="warning"
               py="0.6rem"
-              color="white"              
+              color="white"   
+              onClick={onEdit}           
             >
               <AiOutlineEdit fontSize="2rem"/>
             </Button>
@@ -90,6 +101,7 @@ export const StreamCard = ({streamTitle, streamKey, streamThumbnail, isStreaming
               variant="danger"
               py="0.6rem"
               color="white"
+              onClick={()=>onDelete()}
             >
               <AiOutlineDelete fontSize="2rem"/>
             </Button>

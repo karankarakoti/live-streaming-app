@@ -109,8 +109,8 @@ class StreamController extends Controller{
     try{
       const { streamId } = req.params      
       const stream = await this.service.find(streamId);          
-      if(typeof(stream) === "object"){
-        if(req.user._id === String(stream.createdBy)){
+      if(typeof(stream) === "object"){        
+        if(req.user._id === String(stream.createdBy._id)){
           req.body.stream = stream;        
           next()
         }else{
