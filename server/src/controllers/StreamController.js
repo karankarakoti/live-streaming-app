@@ -20,8 +20,21 @@ class StreamController extends Controller{
   async createStream(req, res){
     req.body.createdBy = req.user._id;
     req.body.streamKey = shortid();
+    if(req.file?.filename){
+      const filename = req.file?.filename;
+      req.body.streamThumbnail = filename;
+    }
     const stream = await this.service.insert(req.body);
     res.status(201).json(stream);
+  }
+
+  async updateStream(req, res){    
+    if(req.file?.filename){
+      const filename = req.file?.filename;
+      req.body.streamThumbnail = filename;
+    }    
+    const stream = await this.service.update(req.body._id, req.body);
+    res.status(200).json(stream);
   }
 
   async getLiveStreams(req, res){
@@ -34,6 +47,12 @@ class StreamController extends Controller{
   async getUserStreams(req, res){
     const streams = await this.service.getUserStreams(req.user._id)
     await res.status(200).json(streams);      
+  }
+
+  async getStreamInfo(req, res){
+    const { key } = req.params;
+    const stream = await this.service.getStreamInfo(key)
+    await res.status(200).json(stream);      
   }
 
   async createStreamToken(req, res){

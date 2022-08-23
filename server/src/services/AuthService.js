@@ -52,6 +52,19 @@ class AuthService{
     }
   }
 
+  async updateUserStatus(id){
+    try{
+      // const user = await this.userService.get(id);
+      // console.log(user)
+      // const data = {
+      //   "status": user.status ? false : true
+      // }
+      return await this.userService.updateStatus(id);      
+    }catch(error){
+      throw error;
+    }
+  }
+
   async changePassword(id, data){
     try{
       const updatedPassword = await this.userService.updatePassword(id, data);

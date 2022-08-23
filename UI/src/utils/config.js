@@ -1,8 +1,9 @@
-const baseURL = "http://192.168.1.7:2000"
+const baseURL = "192.168.1.6";
+
 export const config = {  
-  "BASE_URL": baseURL,
-  "API_URL": baseURL + "/api",
-  "RTMP_IP": "192.168.1.7",
-  "RTMP_URL": "http://192.168.1.7",
+  "BASE_URL": "http://" + baseURL + ":2000",
+  "API_URL": "http://" + baseURL + ":2000/api",
+  "RTMP_IP": baseURL,
+  "RTMP_URL": "http://" + baseURL,
   "RTMP_HTTP_PORT": 8000,  
 }

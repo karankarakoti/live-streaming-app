@@ -3,7 +3,7 @@ const { Schema } = require("mongoose");
 const jwt = require("jsonwebtoken");
 const config = require("../../config/config").getConfig();
 const jwtKey = config.JWT_SECRET;
-const jwtExpirySeconds = 172800;
+const jwtExpiryDays = "365D";
 
 class Auth{
   initSchema(){
@@ -29,7 +29,7 @@ class Auth{
           "role": user.role
         }, jwtKey, {
           "algorithm": "HS256",
-          "expiresIn": jwtExpirySeconds
+          "expiresIn": jwtExpiryDays
         });
         return token;
       }catch(e){

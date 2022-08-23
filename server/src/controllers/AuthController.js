@@ -36,6 +36,16 @@ class AuthController{
     }
   }
 
+  async updateUserStatus(req, res, next){
+    try{            
+      const { id } = req.params;
+      const user = await this.service.updateUserStatus(id);
+      await res.status(200).json(user);      
+    }catch(e){
+      next(e);
+    }
+  }
+
   async changePassword(req, res, next){
     try{
       const id = req.user._id;
@@ -78,6 +88,24 @@ class AuthController{
     }
   }
 
+  async checkUserRole(req, res, next){
+    try{      
+      const token = await this.extractToken(req);
+      req.user = await this.service.checkLogin(token);
+      if(req.user.role === "admin"){
+        req.authorized = true;
+        req.token = token;          
+        next();
+      }else{
+        const error = new Error("Authorization Required");
+        error.statusCode = 401;
+        next(error);
+      }                                  
+    }catch(e){
+      next(e);
+    }                
+  }
+
   async checkUserRoleAtRegistration(req, res, next){
     try{
       if(req.body.role === "user"){
@@ -92,7 +120,7 @@ class AuthController{
         }else{
           const error = new Error("Authorization Required");
           error.statusCode = 401;
-          throw error;
+          next(error);
         }                        
       }      
     }catch(e){

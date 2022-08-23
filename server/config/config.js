@@ -15,7 +15,7 @@ module.exports.getConfig = () => {
     "MAIL_PORT": process.env.MAIL_PORT,
     "MAIL_USER": process.env.MAIL_USER,
     "MAIL_PASS": process.env.MAIL_PASS,
-    "UPLOAD_PATH": path.resolve( `${__dirname }/../../uploads`),
+    "UPLOAD_PATH": path.resolve( `${__dirname }/../public`),
     "RTMP_SERVER": {
       rtmp: {
         port: process.env.RTMP_MS_PORT,
@@ -30,7 +30,7 @@ module.exports.getConfig = () => {
         allow_origin: "*"
       },
       trans: {
-        ffmpeg: process.env.RTMP_FFMPEG_LOCATION,
+        ffmpeg: process.env.RTMP_FFMPEG_LOCATION_WIN,
         tasks: [
           {
             app: "live",

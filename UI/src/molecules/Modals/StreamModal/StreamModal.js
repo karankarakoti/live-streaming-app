@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -40,17 +40,18 @@ export const StreamModal = ({ isOpen, onRequestClose, ariaHideApp, editMode, dat
   const dispatch = useDispatch();
   const onSubmit = async (values, { resetForm, setSubmitting }) => {        
     try{
-      if(editMode){
-        if(!values.isSecuredStream){
-          values.streamPrice = null;
-        } 
-        const form = {
-          _id: data._id,
-          ...values
-        }               
-        dispatch(editStream(form));
+      const _data = new FormData();
+      _data.append("streamTitle", values.streamTitle);
+      _data.append("isSecuredStream", values.isSecuredStream);
+      _data.append("streamPrice", values.isSecuredStream ? values.streamPrice : 0);
+      if(thumbnail){
+        _data.append("thumbnail", thumbnail);
+      }
+      if(editMode){        
+        _data.append("_id", data._id);                              
+        dispatch(editStream(_data, data._id));
       }else{
-        dispatch(createStream(values));
+        dispatch(createStream(_data));
       }      
       resetForm();
       onRequestClose();
@@ -176,7 +177,7 @@ export const StreamModal = ({ isOpen, onRequestClose, ariaHideApp, editMode, dat
                       type="submit"                                    
                     >
                       <Text fontSize="1.6rem">
-                        Create
+                        {!editMode ? "Create" : "Update"}
                       </Text>
                     </Button>
                   </Flex>             

@@ -5,6 +5,8 @@ import { scrollToTop } from "utils/utilities";
 
 export const Broadcasters = () => {
 
+  document.title = "Broadcasters | Live Streaming App"
+
   useEffect(() => {
     scrollToTop(window)
   }, [])

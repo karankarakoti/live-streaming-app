@@ -71,6 +71,7 @@ export default (state = initState, action) => {
     case authConstants.SIGNUP_SUCCESS:
       state={
         ...state,
+        message: action.payload.message,
         loading: false
       }
       break;

@@ -19,6 +19,19 @@ class UserService extends Service{
     }
   }
 
+  async updateStatus(id){
+    try{      
+      await this.model.findByIdAndUpdate(
+        id,
+        [{"$set": {status: {"$not": "$status"}}}],
+        { "new": true }
+      );
+      return { "statusUpdated": true };
+    }catch(errors){
+      throw errors;
+    }
+  }
+
   /**
   *
   * @param email : string
@@ -30,6 +43,10 @@ class UserService extends Service{
     return includePassword ? this.model.findByEmail(email).select("+password") : this.model.findByEmail(email);
   }
 
+  async getBroadcasters(){
+    const broadcasters = await this.model.find({role: "streamer"});
+    return broadcasters
+  }
 }
 
 module.exports = { UserService };

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 const config = require("../../config/config").getConfig();
 const jwtKey = config.JWT_SECRET;
-const jwtExpiryDays = "30D";
+const jwtExpiryDays = "365D";
 
 class Stream{
   initSchema(){

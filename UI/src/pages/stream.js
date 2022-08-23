@@ -5,8 +5,10 @@ import { scrollToTop } from "utils/utilities";
 
 export const Stream = () => {
 
+  document.title = "Stream Name | Live Streaming App"
+
   useEffect(() => {
-    scrollToTop(window)
+    scrollToTop(window);    
   }, [])
 
   return (

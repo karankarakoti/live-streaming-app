@@ -56,11 +56,11 @@ export const createStream = (data) => {
   }
 }
 
-export const editStream = (data) => {
+export const editStream = (data, id) => {
   return async dispatch => {
     try{
       dispatch({ type: appConstants.EDIT_STREAM_REQUEST });
-      const response = await axios.put(`/streams/${data._id}`, data);
+      const response = await axios.put(`/streams/${id}`, data);
       if(response.status === 200){        
         dispatch(getMyStreams());
         dispatch({type: appConstants.EDIT_STREAM_SUCCESS});
@@ -116,5 +116,60 @@ export const createStreamToken = (id, key) => {
 export const resetStreamTokenData = () => {
   return async dispatch => {
     dispatch({ type: appConstants.RESET_STREAM_TOKEN });
+  }
+}
+
+export const getBroadcasters = () => {
+  return async dispatch => {
+    try{
+      dispatch({ type: appConstants.GET_BROADCASTERS_REQUEST });
+      const response = await axios.get("/streams/broadcaster");
+      if(response.status === 200){        
+        dispatch({
+          type: appConstants.GET_BROADCASTERS_SUCCESS,
+          payload: { data: response.data }
+        });
+      }else{
+        dispatch({type: appConstants.GET_BROADCASTERS_FAILURE});
+      }
+    }catch(error){
+      dispatch({type: appConstants.GET_BROADCASTERS_FAILURE});
+    }
+  }
+}
+
+export const updateBroadcaster = (id) => {
+  return async dispatch => {
+    try{
+      dispatch({ type: appConstants.UPDATE_BROADCASTERS_REQUEST });
+      const response = await axios.put(`/auth/user-status-update/${id}`);
+      if(response.status === 200){        
+        dispatch(getBroadcasters());
+        dispatch({type: appConstants.UPDATE_BROADCASTERS_SUCCESS});
+      }else{
+        dispatch({type: appConstants.UPDATE_BROADCASTERS_FAILURE});
+      }
+    }catch(error){
+      dispatch({type: appConstants.UPDATE_BROADCASTERS_FAILURE});
+    }
+  }
+}
+
+export const getStreamInfo = (key) => {
+  return async dispatch => {
+    try{
+      dispatch({ type: appConstants.GET_STREAM_INFO_REQUEST });
+      const response = await axios.get(`/streams/stream/${key}`);
+      if(response.status === 200){           
+        dispatch({
+          type: appConstants.GET_STREAM_INFO_SUCCESS,
+          payload: { data: response.data[0] }
+        });
+      }else{
+        dispatch({type: appConstants.GET_STREAM_INFO_FAILURE});
+      }
+    }catch(error){
+      dispatch({type: appConstants.GET_STREAM_INFO_FAILURE});
+    }
   }
 }

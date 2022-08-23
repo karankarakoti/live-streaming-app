@@ -1,8 +1,10 @@
 import React from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useDispatch } from "react-redux";
 
 import { Box, Button, Error, Flex, Text } from "atoms";
+import { register } from "redux/actions";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -26,15 +28,19 @@ const validationSchema = Yup.object({
 
 export const SigninForm = ({setAuthType}) => {
 
+  const dispatch = useDispatch();
+
   const onSubmit = async (values, { resetForm, setSubmitting }) => {    
     const data = {
       email: values.email,
       password: values.password,  
       firstName: values.firstName,
-      lastName: values.lastName    
-    }       
+      lastName: values.lastName,
+      role: "user"
+    }         
     try{
-      console.log(data)      
+      dispatch(register(data));
+      setAuthType("login");
       resetForm()
     }catch(err){      
     }  

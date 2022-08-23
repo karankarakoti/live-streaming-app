@@ -7,6 +7,7 @@ import { createStreamToken, deleteStream } from "redux/actions";
 import { generatePublicUrl } from "utils/utilities";
 
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { FaUserCircle } from "react-icons/fa";
 import { HiOutlineClipboardCopy } from "react-icons/hi";
 import { TbCurrencyRupee } from "react-icons/tb";
 
@@ -33,7 +34,7 @@ export const StreamCard = ({id, streamTitle, streamKey, streamThumbnail, isStrea
         width="100%"        
       >
         <Image
-          src={streamThumbnail ? streamThumbnail : generatePublicUrl(streamKey+".png")}
+          src={streamThumbnail ? generatePublicUrl(streamThumbnail) : generatePublicUrl(streamKey+".png")}
           alt={streamTitle}   
           borderRadius="0.4rem"
         />
@@ -54,8 +55,18 @@ export const StreamCard = ({id, streamTitle, streamKey, streamThumbnail, isStrea
       </Box>
       <Flex mt="1.5rem" flexDirection="column" justifyContent="space-between">
         <Flex alignItems="start" px="1rem">
-          <Box width="4rem" height="4rem" bg="gray" borderRadius="50%" mr="1rem">
-
+          <Box width="4rem" height="4rem" borderRadius="50%" mr="1rem">
+            {
+              createdBy.imageUrl ?           
+                <Image
+                  src={generatePublicUrl(createdBy.imageUrl)}
+                  alt={createdBy.firstName + " " + createdBy.lastName}
+                  borderRadius="50%"
+                />
+              : <Box color="info.200">
+                <FaUserCircle fontSize="4rem"/>
+              </Box>
+            }
           </Box>
           <Box>
             <Text fontSize="1.6rem" fontWeight="500">

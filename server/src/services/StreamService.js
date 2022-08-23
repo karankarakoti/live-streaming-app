@@ -30,6 +30,11 @@ class StreamService extends Service{
     return streams
   }
 
+  async getStreamInfo(key){
+    const stream = await this.model.find({streamKey: key}).populate("createdBy", "firstName lastName imageUrl");
+    return stream
+  }
+
   async createStreamToken(data){
     const token = await this.model.generateStreamToken(data);
     return token;
