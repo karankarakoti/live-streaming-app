@@ -12,8 +12,8 @@ export const HomePage = () => {
   const app = useSelector(state => state.app);
 
   useEffect(() => {    
-    dispatch(getStreams());        
-  }, [])  
+    dispatch(getStreams());          
+  }, []);
 
   return(
     <Layout>  
@@ -26,9 +26,9 @@ export const HomePage = () => {
         px="2rem"
       >
         {
-          app.streams?.map((item)=>(
+          app.streams?.map((item, index)=>(
             <StreamCard 
-              key={item._id}
+              key={index}
               id={item._id}
               streamTitle={item.streamTitle}
               streamKey={item.streamKey}

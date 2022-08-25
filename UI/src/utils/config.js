@@ -2,6 +2,7 @@ const baseURL = "192.168.1.6";
 
 export const config = {  
   "BASE_URL": "http://" + baseURL + ":2000",
+  "SOCKET_URL": "http://" + baseURL + ":4000",
   "API_URL": "http://" + baseURL + ":2000/api",
   "RTMP_IP": baseURL,
   "RTMP_URL": "http://" + baseURL,

@@ -242,7 +242,8 @@ export default (state = initState, action) => {
     case appConstants.GET_STREAM_INFO_REQUEST:
       state={
         ...state,
-        loading: true
+        loading: true,
+        stream: {}
       }
       break;
 
@@ -260,7 +261,28 @@ export default (state = initState, action) => {
         error: "Something Went Wrong",
         loading: false
       }
-      break;    
+      break;   
+      
+    case appConstants.NEW_STREAM_STARTED:
+      state={
+        ...state,
+        streams: [...action.payload.data, ...state.streams]
+      }
+      break;
+
+    case appConstants.STREAM_FINISHED:
+      const temp = state.streams;            
+      let tempStream = state.stream;
+      temp.splice(temp.findIndex(a => a._id === action.payload.data), 1);
+      if(tempStream._id === action.payload.data){        
+        tempStream.isStreamingNow = false;
+      }      
+      state={
+        ...state,
+        streams: temp,
+        stream: tempStream
+      }
+      break;
 
   }
   return state;

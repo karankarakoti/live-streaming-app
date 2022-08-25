@@ -7,6 +7,7 @@ import { theme } from "styles";
 import { AppRoutes } from "routes";
 import { Box } from "atoms";
 import store from "redux/store";
+import { socket } from "utils/socket";
 import { scrollToTop } from "utils/utilities";
 
 import "styles/globals.css";
@@ -16,7 +17,9 @@ import { AiOutlineArrowUp } from "react-icons/ai";
 
 function App() {
   
-  const [scroll, setScroll] = useState(false);  
+  const [scroll, setScroll] = useState(false); 
+  
+  socket.on("connection", socket => {});
 
   const handleScroll = () => {
     if (window.scrollY >= 200) {

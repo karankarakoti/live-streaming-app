@@ -1,9 +1,9 @@
 import React from "react";
-import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useDispatch } from "react-redux";
+import * as Yup from "yup";
 
 import { Box, Button, Error, Flex, Text } from "atoms";
-import { useDispatch } from "react-redux";
 import { login } from "redux/actions";
 
 const validationSchema = Yup.object({

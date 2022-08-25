@@ -173,3 +173,29 @@ export const getStreamInfo = (key) => {
     }
   }
 }
+
+export const newStreamStarted = (data) => {
+  return async dispatch => {
+    try{      
+      dispatch({ 
+        type: appConstants.NEW_STREAM_STARTED,
+        payload: { data: [data] }
+      });      
+    }catch(error){
+      console.log(error);
+    }
+  }
+}
+
+export const streamFinished = (id) => {
+  return async dispatch => {
+    try{            
+      dispatch({ 
+        type: appConstants.STREAM_FINISHED,
+        payload: { data: id }
+      });      
+    }catch(error){
+      console.log(error);
+    }
+  }
+}

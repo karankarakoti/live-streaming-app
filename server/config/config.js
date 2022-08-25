@@ -20,7 +20,7 @@ module.exports.getConfig = () => {
       rtmp: {
         port: process.env.RTMP_MS_PORT,
         chunk_size: 60000,
-        gop_cache: true,
+        gop_cache: false,
         ping: 60,
         ping_timeout: 30
       },

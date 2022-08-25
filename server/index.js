@@ -11,6 +11,7 @@ console.log(`✔ Mode: ${config.NODE_ENV}`);
 console.log(`✔ Port: ${PORT}`);
 
 const { server } = require("./config/server");
+const { io } = require("./config/socket");
 
 server.listen(PORT).on("error", (err) => {
   console.log("✘ Application failed to start");
@@ -19,6 +20,8 @@ server.listen(PORT).on("error", (err) => {
 }).on("listening", () => {
   console.log("✔ Application Started");
 });
+
+io.on("connection", socket=>{});
 
 NodeMediaServer.run();
 thumbnail_generator.start();

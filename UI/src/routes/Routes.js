@@ -10,12 +10,22 @@ import MyStreams from "pages/my-streams";
 import Broadcasters from "pages/broadcasters";
 import Profile from "pages/profile";
 
-import { isUserLoggedIn } from "redux/actions";
+import { isUserLoggedIn , newStreamStarted, streamFinished} from "redux/actions";
+import { socket } from "utils/socket";
 
 export const AppRoutes = () => {
 
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
+
+  useEffect(() => {
+    socket.on("New Livestream", (data) => {          
+      dispatch(newStreamStarted(data));
+    });
+    socket.on("Livestream Finish", (id) => {            
+      dispatch(streamFinished(id));
+    });    
+  }, [])
 
   useEffect(()=>{
     dispatch(isUserLoggedIn())

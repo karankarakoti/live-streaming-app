@@ -1,5 +1,6 @@
 const autoBind = require("auto-bind");
 const shortid = require("shortid");
+const { io } = require("../../config/socket");
 
 const { Controller } = require("../../system/controllers")
 const { Stream } = require("../models/Stream");
@@ -45,7 +46,7 @@ class StreamController extends Controller{
   }
 
   async getUserStreams(req, res){
-    const streams = await this.service.getUserStreams(req.user._id)
+    const streams = await this.service.getUserStreams(req.user._id)    
     await res.status(200).json(streams);      
   }
 
@@ -72,7 +73,10 @@ class StreamController extends Controller{
     const updateData = {
       "isStreamingNow": true
     }
-    const isUpdated = await this.service.update(data.stream._id, updateData);    
+    const isUpdated = await this.service.update(data.stream._id, updateData);        
+    const _stream = data.stream;
+    _stream.isStreamingNow = true;
+    io.emit("New Livestream", _stream);
     res.status(200).json(isUpdated);
   }
 
@@ -83,9 +87,10 @@ class StreamController extends Controller{
     }
     const updateData = {
       "isStreamingNow": false,
-      "isStreamFinish": true
+      // "isStreamFinish": true
     }
     const isUpdated = await this.service.update(data.stream._id, updateData);    
+    io.emit("Livestream Finish", data.stream._id);
     res.status(200).json(isUpdated);
   }
 
