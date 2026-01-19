@@ -1,4 +1,4 @@
-const baseURL = "192.168.1.6";
+const baseURL = process.env.REACT_PUBLIC_API_URL || "192.168.1.6";
 
 export const config = {  
   "BASE_URL": "http://" + baseURL + ":2000",
